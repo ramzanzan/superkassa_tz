@@ -1,0 +1,6 @@
+To run: ./gradlew run --args=[file-path]
+On windows use ./gradlew.bat
+
+Example: ./gradlew --args=data/example.json
+
+To build: ./gradlew build

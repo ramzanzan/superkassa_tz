@@ -1,13 +1,27 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.EqualsAndHashCode;
 
+import java.io.File;
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class SuperkassaTzSolver<T> {
 
 
     public static void main(String[] args) {
-
+        if (args.length == 0) {
+            System.out.println("Usage: $cmd file-path");
+            return;
+        }
+        var mapper = new ObjectMapper();
+        try {
+            List<List<String>> data = mapper.readValue(new File(args[0]), LinkedList.class);
+            var solver = new SuperkassaTzSolver<>(data);
+            var solution = solver.solve();
+            var result = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(solution);
+            System.out.println(result.replaceAll("],","],\n"));
+        } catch (Exception e) {
+            System.err.println("ERR: " + e.getMessage());
+        }
     }
 
     public SuperkassaTzSolver(List<List<T>> lines) {
@@ -91,7 +105,7 @@ public class SuperkassaTzSolver<T> {
                 var nextParts = findParts(target.subtract(part), fillingIdx + 1);
                 if (nextParts != null) {
                     listOfListsOfParts = new LinkedList<>();
-                    for(var parts : nextParts) {
+                    for (var parts : nextParts) {
                         List<ListFilling> newParts = new ArrayList<>(parts.size() + 1);
                         newParts.addAll(parts);
                         newParts.add(part);
@@ -114,6 +128,9 @@ public class SuperkassaTzSolver<T> {
     }
 
 
+    /**
+     * Representation of empty/non-empty spaces in a list of arbitrary size
+     */
     @EqualsAndHashCode
     static class ListFilling {
 
