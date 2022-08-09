@@ -52,6 +52,7 @@ public class SuperkassaTzSolver<T> {
     }
 
     List<List<T>> buildResult(List<List<ListFilling>> parts) {
+        if(parts == null) return new LinkedList<>();
         var solution = new LinkedList<List<T>>();
         List<T> emptyLine = Collections.nCopies(lineSize, null);
         parts.stream().parallel().forEach(listOfParts -> {
