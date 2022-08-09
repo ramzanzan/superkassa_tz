@@ -4,3 +4,5 @@ On windows use ./gradlew.bat
 Example: ./gradlew --args=data/example.json
 
 To build: ./gradlew build
+
+NB: probably should use BitSet
